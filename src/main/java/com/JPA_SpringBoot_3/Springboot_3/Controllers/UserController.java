@@ -4,6 +4,7 @@ import com.JPA_SpringBoot_3.Springboot_3.Entity.User;
 import com.JPA_SpringBoot_3.Springboot_3.Service.UserService;
 import com.JPA_SpringBoot_3.Springboot_3.dto.request.UserCreationRequest;
 import com.JPA_SpringBoot_3.Springboot_3.dto.request.UserUpdationRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +17,10 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    User createUser(@RequestBody UserCreationRequest request){
+    User createUser(@RequestBody @Valid UserCreationRequest request){
     return userService.createUser(request);
 }
+
     @GetMapping
     List<User> createUser(){
         return userService.getUsers();
