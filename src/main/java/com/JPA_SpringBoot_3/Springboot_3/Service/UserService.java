@@ -1,6 +1,8 @@
 package com.JPA_SpringBoot_3.Springboot_3.Service;
 
 import com.JPA_SpringBoot_3.Springboot_3.Entity.User;
+import com.JPA_SpringBoot_3.Springboot_3.Exception.AppException;
+import com.JPA_SpringBoot_3.Springboot_3.Exception.ErrorCode;
 import com.JPA_SpringBoot_3.Springboot_3.dto.request.UserCreationRequest;
 import com.JPA_SpringBoot_3.Springboot_3.dto.request.UserUpdationRequest;
 import com.JPA_SpringBoot_3.Springboot_3.repository.UserRepository;
@@ -17,7 +19,8 @@ public class UserService {
         User user= new User();
 
         if(userRepository.existsByUsername(request.getUsername()))
-            throw new RuntimeException("User existed @!!");
+            //AppException này là bắt lỗi được chọn với errorcode được truyền vào
+            throw new AppException(ErrorCode.USER_EXIST);
 
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());

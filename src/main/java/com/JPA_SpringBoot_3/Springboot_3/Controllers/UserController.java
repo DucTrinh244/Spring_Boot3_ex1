@@ -2,6 +2,7 @@ package com.JPA_SpringBoot_3.Springboot_3.Controllers;
 
 import com.JPA_SpringBoot_3.Springboot_3.Entity.User;
 import com.JPA_SpringBoot_3.Springboot_3.Service.UserService;
+import com.JPA_SpringBoot_3.Springboot_3.dto.request.APIResponse;
 import com.JPA_SpringBoot_3.Springboot_3.dto.request.UserCreationRequest;
 import com.JPA_SpringBoot_3.Springboot_3.dto.request.UserUpdationRequest;
 import jakarta.validation.Valid;
@@ -17,8 +18,14 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    User createUser(@RequestBody @Valid UserCreationRequest request){
-    return userService.createUser(request);
+    APIResponse<User> createUser(@RequestBody @Valid UserCreationRequest request){
+        // khởi tọa đối tượng api
+        APIResponse<User> apiResponse = new APIResponse<>();
+
+        // set result
+        apiResponse.setResult(userService.createUser(request));
+        // TRẢ VỀ API RESPONSE ĐÃ ĐƯỢC CHUYỂN TỪ USER VỀ APIResponse
+    return apiResponse;
 }
 
     @GetMapping
