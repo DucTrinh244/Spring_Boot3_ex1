@@ -5,17 +5,21 @@ import com.JPA_SpringBoot_3.Springboot_3.Service.UserService;
 import com.JPA_SpringBoot_3.Springboot_3.dto.request.APIResponse;
 import com.JPA_SpringBoot_3.Springboot_3.dto.request.UserCreationRequest;
 import com.JPA_SpringBoot_3.Springboot_3.dto.request.UserUpdationRequest;
+import com.JPA_SpringBoot_3.Springboot_3.dto.response.UserResponse;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserController {
-    @Autowired
-    private UserService userService;
+     UserService userService;
 
     @PostMapping
     APIResponse<User> createUser(@RequestBody @Valid UserCreationRequest request){
@@ -34,11 +38,12 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    User getUser(@PathVariable("userId") String userId){
+    UserResponse getUser(@PathVariable("userId") String userId){
+
         return userService.getUser(userId);
     }
     @PutMapping("/{userId}")
-    User updateUser(@PathVariable("userId") String userid,@RequestBody UserUpdationRequest request){
+    UserResponse updateUser(@PathVariable("userId") String userid,@RequestBody UserUpdationRequest request){
         return userService.updateUser(userid,request);
     }
 
