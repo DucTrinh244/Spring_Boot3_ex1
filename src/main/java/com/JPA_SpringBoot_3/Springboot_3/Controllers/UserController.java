@@ -25,26 +25,31 @@ public class UserController {
     APIResponse<User> createUser(@RequestBody @Valid UserCreationRequest request){
         // khởi tọa đối tượng api
         APIResponse<User> apiResponse = new APIResponse<>();
-
         // set result
         apiResponse.setResult(userService.createUser(request));
-        // TRẢ VỀ API RESPONSE ĐÃ ĐƯỢC CHUYỂN TỪ USER VỀ APIResponse
+            // TRẢ VỀ API RESPONSE ĐÃ ĐƯỢC CHUYỂN TỪ USER VỀ APIResponse
     return apiResponse;
 }
 
     @GetMapping
-    List<User> createUser(){
-        return userService.getUsers();
+    APIResponse<List<User>> createUser(){
+        APIResponse<List<User>> apiResponse= new APIResponse<>();
+        apiResponse.setResult(userService.getUsers());
+        return apiResponse;
     }
 
     @GetMapping("/{userId}")
-    UserResponse getUser(@PathVariable("userId") String userId){
-
-        return userService.getUser(userId);
+    APIResponse<UserResponse> getUser(@PathVariable("userId") String userId){
+        UserResponse userResponse = userService.getUser(userId);
+        APIResponse<UserResponse> apiResponse = new APIResponse<>();
+        apiResponse.setResult(userResponse);
+        return apiResponse;
     }
     @PutMapping("/{userId}")
-    UserResponse updateUser(@PathVariable("userId") String userid,@RequestBody UserUpdationRequest request){
-        return userService.updateUser(userid,request);
+    APIResponse<UserResponse> updateUser(@PathVariable("userId") String userid,@RequestBody UserUpdationRequest request){
+        APIResponse<UserResponse> apiResponse= new APIResponse<>();
+        apiResponse.setResult(userService.updateUser(userid,request));
+        return apiResponse;
     }
 
     @DeleteMapping("/{userId}")
